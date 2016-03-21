@@ -3,5 +3,17 @@ function git_untracked_files -d "Get the number of untracked files in a reposito
         return 1
     end
 
-    git ls-files --others --exclude-standard | awk '{ n++ } END { print n }'
+    git ls-files --others --exclude-standard | awk '
+
+        BEGIN {
+            n = 0
+        }
+
+        { n++ }
+
+        END {
+            print n
+            exit !n
+        }
+    '
 end
